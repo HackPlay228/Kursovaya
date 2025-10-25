@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>StudyHack — Трекер учебных целей</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="logo">StudyHack</div>
+        <div class="auth-buttons">
+          <button class="auth-btn">Войти</button>
+          <button class="auth-btn accent">Зарегистрироваться</button>
+        </div>
+      </header>
+
+      <div class="toolbar">
+        <button
+          class="main-btn"
+          onclick="document.getElementById('modal').style.display='flex'"
+        >
+          + Создать новую задачу
+        </button>
+        <button class="collapse-btn" onclick="toggleAllTasks()">
+          📂 Свернуть все задачи
+        </button>
+      </div>
+
+      <!-- Модальное окно для создания задачи -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <h3>Создать новую задачу</h3>
+          <input type="text" placeholder="Название цели" class="modal-input" />
+          <input
+            type="text"
+            placeholder="Описание (необязательно)"
+            class="modal-input"
+          />
+
+          <div class="modal-row">
+            <div class="modal-field">
+              <label>Дедлайн</label>
+              <input type="date" class="modal-input" />
+            </div>
+            <div class="modal-field">
+              <label>Приоритет</label>
+              <select class="modal-select">
+                <option value="low">Низкий</option>
+                <option value="medium" selected>Средний</option>
+                <option value="high">Высокий</option>
+                <option value="urgent">Срочный</option>
+              </select>
+            </div>
+          </div>
+
+          <textarea
+            placeholder="Подзадачи (каждая с новой строки)"
+            class="modal-textarea"
+          ></textarea>
+          <div class="modal-actions">
+            <button
+              class="modal-btn cancel"
+              onclick="document.getElementById('modal').style.display='none'"
+            >
+              Отмена
+            </button>
+            <button class="modal-btn create">Создать</button>
+          </div>
+        </div>
+      </div>
+
+      <main class="columns">
+        <!-- БЭКЛОГ -->
+        <section class="column">
+          <h2>Бэклог</h2>
+          <div class="goal">
+            <div class="progress"><i style="width: 0%"></i></div>
+            <div class="goal-header">
+              <div class="goal-main">
+                <div class="goal-name">Изучить Python</div>
+                <div class="goal-meta">
+                  <span class="priority high">Высокий</span>
+                  <span class="deadline">📅 15.12.2024</span>
+                </div>
+              </div>
+              <div class="goal-actions">
+                <button class="icon-btn edit">✏️</button>
+                <button class="icon-btn delete">🗑️</button>
+                <button class="icon-btn collapse">🔽</button>
+              </div>
+            </div>
+            <div class="goal-desc">Основы синтаксиса, функции, классы</div>
+            <div class="goal-content">
+              <ul class="checkpoints">
+                <li><input type="checkbox" /> Переменные и типы данных</li>
+                <li><input type="checkbox" /> Условия и циклы</li>
+                <li><input type="checkbox" /> Функции</li>
+                <li><input type="checkbox" /> Классы и ООП</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="goal">
+            <div class="progress"><i style="width: 0%"></i></div>
+            <div class="goal-header">
+              <div class="goal-main">
+                <div class="goal-name">Прочитать книгу «Чистый код»</div>
+                <div class="goal-meta">
+                  <span class="priority medium">Средний</span>
+                  <span class="deadline">📅 20.11.2024</span>
+                </div>
+              </div>
+              <div class="goal-actions">
+                <button class="icon-btn edit">✏️</button>
+                <button class="icon-btn delete">🗑️</button>
+                <button class="icon-btn collapse">🔽</button>
+              </div>
+            </div>
+            <div class="goal-content">
+              <ul class="checkpoints">
+                <li><input type="checkbox" /> Глава 1–3</li>
+                <li><input type="checkbox" /> Глава 4–6</li>
+                <li><input type="checkbox" /> Глава 7–10</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- В РАБОТЕ -->
+        <section class="column">
+          <h2>В работе</h2>
+          <div class="goal">
+            <div class="progress"><i style="width: 50%"></i></div>
+            <div class="goal-header">
+              <div class="goal-main">
+                <div class="goal-name">Выучить JavaScript</div>
+                <div class="goal-meta">
+                  <span class="priority urgent">Срочный</span>
+                  <span class="deadline overdue">📅 01.11.2024</span>
+                </div>
+              </div>
+              <div class="goal-actions">
+                <button class="icon-btn edit">✏️</button>
+                <button class="icon-btn delete">🗑️</button>
+                <button class="icon-btn collapse">🔽</button>
+              </div>
+            </div>
+            <div class="goal-desc">DOM, async, практика проектов</div>
+            <div class="goal-content">
+              <ul class="checkpoints">
+                <li><input type="checkbox" checked /> Основы синтаксиса</li>
+                <li><input type="checkbox" checked /> Работа с DOM</li>
+                <li><input type="checkbox" /> Асинхронность</li>
+                <li><input type="checkbox" /> Мини-проект</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="goal">
+            <div class="progress"><i style="width: 33%"></i></div>
+            <div class="goal-header">
+              <div class="goal-main">
+                <div class="goal-name">Практиковать английский</div>
+                <div class="goal-meta">
+                  <span class="priority low">Низкий</span>
+                  <span class="deadline">📅 30.12.2024</span>
+                </div>
+              </div>
+              <div class="goal-actions">
+                <button class="icon-btn edit">✏️</button>
+                <button class="icon-btn delete">🗑️</button>
+                <button class="icon-btn collapse">🔽</button>
+              </div>
+            </div>
+            <div class="goal-desc">Цель — уровень B2</div>
+            <div class="goal-content">
+              <ul class="checkpoints">
+                <li><input type="checkbox" checked /> Грамматика</li>
+                <li><input type="checkbox" /> Словарный запас</li>
+                <li><input type="checkbox" /> Разговорная практика</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ЗАВЕРШЕНО -->
+        <section class="column">
+          <h2>Завершено</h2>
+          <div class="goal done">
+            <div class="progress"><i style="width: 100%"></i></div>
+            <div class="goal-header">
+              <div class="goal-main">
+                <div class="goal-name">Основы HTML + CSS</div>
+                <div class="goal-meta">
+                  <span class="priority medium">Средний</span>
+                  <span class="deadline">📅 15.10.2024</span>
+                </div>
+              </div>
+              <div class="goal-actions">
+                <button class="icon-btn edit">✏️</button>
+                <button class="icon-btn delete">🗑️</button>
+                <button class="icon-btn collapse">🔽</button>
+              </div>
+            </div>
+            <div class="goal-content">
+              <ul class="checkpoints">
+                <li><input type="checkbox" checked /> Структура HTML</li>
+                <li><input type="checkbox" checked /> Основы CSS</li>
+                <li><input type="checkbox" checked /> Адаптивность</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="goal done">
+            <div class="progress"><i style="width: 100%"></i></div>
+            <div class="goal-header">
+              <div class="goal-main">
+                <div class="goal-name">Пройти курс по UX/UI</div>
+                <div class="goal-meta">
+                  <span class="priority high">Высокий</span>
+                  <span class="deadline">📅 05.10.2024</span>
+                </div>
+              </div>
+              <div class="goal-actions">
+                <button class="icon-btn edit">✏️</button>
+                <button class="icon-btn delete">🗑️</button>
+                <button class="icon-btn collapse">🔽</button>
+              </div>
+            </div>
+            <div class="goal-content">
+              <ul class="checkpoints">
+                <li><input type="checkbox" checked /> Основы UX</li>
+                <li><input type="checkbox" checked /> Работа с Figma</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>© 2025 StudyHack — трекер учебных целей</footer>
+    </div>
+
+    <script>
+      function toggleAllTasks() {
+        const goals = document.querySelectorAll(".goal");
+        const btn = document.querySelector(".collapse-btn");
+        const allCollapsed = goals[0]?.classList.contains("collapsed");
+
+        goals.forEach((goal) => {
+          if (allCollapsed) {
+            goal.classList.remove("collapsed");
+            btn.textContent = "📂 Свернуть все задачи";
+          } else {
+            goal.classList.add("collapsed");
+            btn.textContent = "📁 Развернуть все задачи";
+          }
+        });
+      }
+
+      // Обработчики для сворачивания отдельных задач
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("collapse")) {
+          e.target.closest(".goal").classList.toggle("collapsed");
+          e.target.textContent = e.target
+            .closest(".goal")
+            .classList.contains("collapsed")
+            ? "▶️"
+            : "🔽";
+        }
+      });
+    </script>
+  </body>
+</html>
