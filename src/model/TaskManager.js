@@ -6,6 +6,39 @@ export class TaskManager {
         this.tasks = new Map();
     }
 
+    // Метод для загрузки данных из API
+    addTaskFromApi(apiTask) {
+        const task = new Task(
+            apiTask.id || Date.now().toString(),
+            apiTask.title,
+            apiTask.description,
+            apiTask.subtasks ? apiTask.subtasks.map(st => st.text) : [],
+            apiTask.deadline,
+            apiTask.priority
+        );
+        
+        // Восстанавливаем данные из API
+        if (apiTask.subtasks) {
+            task.subtasks = apiTask.subtasks.map(st => ({
+                text: st.text,
+                completed: st.completed || false
+            }));
+        }
+        
+        task.status = apiTask.status || 'backlog';
+        task.isCollapsed = apiTask.isCollapsed || false;
+        if (apiTask.createdAt) {
+            task.createdAt = new Date(apiTask.createdAt);
+        }
+        
+        // Обновляем статус на основе подзадач
+        task.updateStatus();
+        
+        this.tasks.set(task.id, task);
+        return task;
+    }
+
+    // Остальные методы остаются без изменений...
     addTask(title, description, subtasks, deadline, priority) {
         const id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
         const task = new Task(id, title, description, subtasks, deadline, priority);
